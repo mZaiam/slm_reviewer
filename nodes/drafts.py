@@ -1,9 +1,10 @@
 from langchain_core.messages import HumanMessage
 
 from state import TopicState
-from llm import get_llm
+from utils import get_llm
 
 def draft_suggestion(state: TopicState, model_name: str, task: str):
+    """Drafts a suggestion for the topic."""
     llm = get_llm(model_name=model_name)
     
     prompt = f"""
@@ -15,6 +16,9 @@ def draft_suggestion(state: TopicState, model_name: str, task: str):
     ---
     
     Task: {task}
+
+    Do not repeat these:
+    {state['suggestions']}
     """
     
     final_text = ""
@@ -23,4 +27,12 @@ def draft_suggestion(state: TopicState, model_name: str, task: str):
         final_text += chunk.content
     print()
         
-    return {"suggestions": final_text}
+    new_suggestion = final_text.strip()
+    
+    current_suggestions = state.get("suggestions", "")
+    updated_suggestions = current_suggestions + "\n" + new_suggestion
+    
+    return {
+        "suggestions": updated_suggestions,
+        "suggestions_count": state.get("suggestions_count", 0) + 1
+    }
