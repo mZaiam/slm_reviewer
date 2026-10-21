@@ -21,3 +21,17 @@ class TopicState(TypedDict):
     suggestions: str
     suggestions_count: int
     final_suggestions: str
+
+class SummaryState(TypedDict):
+    """Class implementation of the summary of a file.
+
+    Atributes:
+      file_path (str): path of the file.
+      output_path (str): output path of the summary.
+      raw_content (str): the content of the file.
+      summary (str): the summary of the file.
+    """
+    file_path: str
+    output_path: str
+    raw_content: str
+    summary: str

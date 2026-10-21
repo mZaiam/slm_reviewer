@@ -1,9 +1,10 @@
 from functools import partial
 from langgraph.graph import StateGraph, START, END
+from langgraph.graph.state import CompiledStateGraph
 
 from state import TopicState
-from nodes.files import load_topic, save_suggestion, should_continue, save_topics, remove_file
-from nodes.drafts import draft_suggestion, review_topics
+from slm_reviewer.nodes.files import load_topic, save_suggestion, should_continue, save_topics, remove_file
+from slm_reviewer.nodes.drafts import draft_suggestion, review_topics
 
 def topic_suggestion_workflow(
     model: str, 
@@ -12,7 +13,7 @@ def topic_suggestion_workflow(
     task_suggestion: str, 
     task_review: str, 
     save_fig_path: str = "images/topic_suggestion_workflow.png"
-):
+) -> CompiledStateGraph:
     """Topic suggestion workflow.
 
     Args:

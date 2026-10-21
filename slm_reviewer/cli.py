@@ -1,36 +1,34 @@
 import argparse
 import sys
-import os
-from dotenv import load_dotenv
 
-from slm_reviewer.workflows.suggestion import suggestion_app 
+from slm_reviewer.workflows.summary import summary_workflow
+from slm_reviewer.vector_db import build_db
 
 def main():
-    load_dotenv()
-    
-    parser = argparse.ArgumentParser(description="SLM Reviewer Agentic Workflows")
-    subparsers = parser.add_subparsers(dest="command", help="Available workflows")
+    parser = argparse.ArgumentParser(description="SLM Reviewer CLI")
+    subparsers = parser.add_subparsers(dest="command")
 
-    # Command: suggest
-    suggest_parser = subparsers.add_parser("suggest", help="Run the topic suggestion workflow")
-    suggest_parser.add_argument("--topic", type=str, required=True, help="The main topic to suggest subtopics for")
-    suggest_parser.add_argument("--n", type=int, default=3, help="Number of suggestions to generate")
+    db_parser = subparsers.add_parser("build-db", help="Rebuild the vector database")
 
-    # Command: synthesize
-    synth_parser = subparsers.add_parser("synthesize", help="Synthesize a .qmd file")
-    synth_parser.add_argument("--file", type=str, required=True, help="Path to the .qmd file")
+    summary_parser = subparsers.add_parser("summary", help="Summarize a .qmd file")
+    summary_parser.add_argument("--file", type=str, required=True, help="Path to the input .qmd file")
+    summary_parser.add_argument("--out", type=str, required=True, help="Path to save the generated markdown summary")
+    summary_parser.add_argument("--model", type=str, required=True, help="LLM to use for synthesis")
+    summary_parser.add_argument("--ctx", type=int, default=8192, help="Context window size")
 
     args = parser.parse_args()
 
-    if args.command == "suggest":
-        print(f"Running suggestion workflow for topic: {args.topic}")
-        # initial_state = {"topic": args.topic, "suggestions_count": 0}
-        # suggestion_app.invoke(initial_state)
-
-    elif args.command == "synthesize":
-        print(f"Synthesizing {args.file}...")
-        # Add synthesis workflow trigger here
-
+    if args.command == "build-db":
+        build_db()
+        
+    elif args.command == "summary":
+        summary_workflow(
+            file_path=args.file,
+            output_path=args.out,
+            model_name=args.model,
+            num_ctx=args.ctx
+        )
+        
     else:
         parser.print_help()
         sys.exit(1)

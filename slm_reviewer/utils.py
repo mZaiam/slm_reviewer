@@ -10,7 +10,7 @@ from langchain_ollama import ChatOllama
 
 load_dotenv()
 
-def get_llm(model_name: str, num_ctx: int):
+def get_llm(model_name: str, num_ctx: int) -> ChatOllama:
     """Loads a LLM model from the Oracle server.
 
     Args:
