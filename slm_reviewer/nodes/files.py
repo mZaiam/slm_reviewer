@@ -58,7 +58,6 @@ def save_topics(state: TopicState):
     print(f"[Node] save_topics ({(e - s):.2f} s)")
     return {}
 
-
 def remove_file(state: TopicState):
     """Deletes the temporary raw suggestions file from the disk."""
     s = timeit.default_timer()

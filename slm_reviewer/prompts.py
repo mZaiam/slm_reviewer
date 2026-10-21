@@ -3,6 +3,6 @@ def topic_suggestion_prompt(section: int) -> str:
 
 def topic_review_prompt(section: int, topic_name: str) -> str:
     return f"""1. Remove any duplicate or highly similar concepts.
-2. Discard topics that do not fit into the section {section} of {topic_name}.
-3. Assign the remaining topics a sequential hierarchical number based on where they should fit in the section {section}. 
-Output strictly the final numbered list, which should include the previous topics of the section alongside the new additions."""
+    2. Discard topics that do not fit into the section {section} of {topic_name}.
+    3. Assign the remaining topics a sequential hierarchical number based on where they should fit in the section {section}. 
+    Output strictly the final numbered list, which should include the previous topics of the section {section} alongside the new additions."""

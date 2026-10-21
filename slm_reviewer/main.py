@@ -17,7 +17,7 @@ TOPIC_DIR = os.path.join(QUARTO_DIR, TOPIC_NAME)
 SUGGESTIONS_PATH = os.path.join(QUARTO_DIR, "_agent", f"{TOPIC_NAME}_suggestions.md")
 
 N_SUGGESTIONS = 5
-SECTION = 1
+SECTION = 1.2
 
 TASK_SUGGESTION = topic_suggestion_prompt(SECTION)
 TASK_REVIEW = topic_review_prompt(SECTION, TOPIC_NAME)

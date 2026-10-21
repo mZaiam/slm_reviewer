@@ -13,6 +13,19 @@ def topic_suggestion_workflow(
     task_review: str, 
     save_fig_path: str = "images/topic_suggestion_workflow.png"
 ):
+    """Topic suggestion workflow.
+
+    Args:
+      model (str): name of the model. 
+      num_ctx (int): context window.
+      n (int): number of suggestions.
+      task_suggestion (str): the prompt for the suggestion task. 
+      task_review (str): the prompt for the review task. 
+      save_fig_path (str): the path to save the workflow diagram.
+
+    Return:
+      app (CompiledStateGraph): the actual workflow. 
+    """
     workflow = StateGraph(TopicState)
 
     workflow.add_node("load_topic", load_topic)
